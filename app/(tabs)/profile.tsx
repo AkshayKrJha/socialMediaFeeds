@@ -40,7 +40,7 @@ export default function Index() {
       {/* profile pic, username */}
       <View
         style={{
-          flex: 0.5,
+          flex: 0.25,
           flexDirection: "row",
           alignItems: "center",
         }}

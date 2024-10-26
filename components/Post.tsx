@@ -8,14 +8,18 @@ import {
   View,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useIndex } from "@/hooks/useIndex";
+import Octicons from "@expo/vector-icons/Octicons";
 
 // slideList credit https://dev.to/lloyds-digital/let-s-create-a-carousel-in-react-native-4ae2
 
-export default function Post({ randomList = [1, 2, 3, 4, , 5] }) {
+export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
   const [like, setLike] = useState<any>("like2");
   const [caption, setCaption] = useState<any>("");
   const [author, setAuthor] = useState<any>("");
+  const { index, onScroll } = useIndex();
+
   useEffect(() => {
     (async function () {
       const postQuote = await fetch("https://dummyjson.com/quotes/random")
@@ -35,6 +39,17 @@ export default function Post({ randomList = [1, 2, 3, 4, , 5] }) {
       id: i,
       image: `https://picsum.photos/1440/2842?random=${random}`,
     };
+  });
+  const dotList = randomList.map((_, i) => {
+    return (
+      <Octicons
+        name="dot-fill"
+        size={24}
+        color={i === index ? "#f00" : "#0ff"}
+        key={i}
+        style={{marginHorizontal:"1.5%"}}
+      />
+    );
   });
   return (
     <View style={styles.root}>
@@ -64,23 +79,38 @@ export default function Post({ randomList = [1, 2, 3, 4, , 5] }) {
       </View>
       {/* Images with horizontal scroll */}
       <View style={styles.postImage}>
-        <FlatList
-          data={slideList}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.carouselView}>
-                <Image
-                  style={styles.carouselImage}
-                  //   resizeMode="contain"
-                  source={{ uri: item.image }}
-                />
-              </View>
-            );
-          }}
-          horizontal
-          pagingEnabled
-          // showsHorizontalScrollIndicator={false}
-        />
+        {/* Find id and length of slidelist item and slidelist */}
+        <View>
+          <FlatList
+            data={slideList}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.carouselView}>
+                  <Image
+                    style={styles.carouselImage}
+                    //   resizeMode="contain"
+                    source={{ uri: item.image }}
+                  />
+                </View>
+              );
+            }}
+            horizontal
+            pagingEnabled
+            onScroll={onScroll}
+            // showsHorizontalScrollIndicator={false}
+          />
+          <View
+            style={{
+              position: "absolute",
+              bottom: "4%",
+              // left: "40%",
+              flexDirection: "row",
+              alignSelf:"center"
+            }}
+          >
+            {dotList}
+          </View>
+        </View>
         {/* Likes count and description */}
         <Pressable
           onPress={() => {

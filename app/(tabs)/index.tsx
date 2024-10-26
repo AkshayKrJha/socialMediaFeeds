@@ -2,7 +2,8 @@ import Post from "@/components/Post";
 import { FlatList, Text, View } from "react-native";
 
 export default function Index() {
-  const postList = Array.from({ length: 50 }).map((_, id) => {
+  const numPosts = 50;
+  const postList = Array.from({ length: numPosts }).map((_, id) => {
     let length = Math.floor(Math.random() * 10) + 1;
     return {
       id,
