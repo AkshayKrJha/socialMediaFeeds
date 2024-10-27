@@ -64,8 +64,8 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
     getItemLayout: useCallback(
       (_: any, index: any) => ({
         index,
-        length: 0.92 * windowWidth,
-        offset: 0.92 * index * windowWidth,
+        length: 0.88 * windowWidth,
+        offset: 0.88 * index * windowWidth,
       }),
       []
     ),
@@ -88,7 +88,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
           // resizeMode="contain"
         />
         {/* <Text>React Native</Text> */}
-        <Text style={styles.author}>
+        <Text style={styles.author} adjustsFontSizeToFit>
           {author
             ?.toLowerCase()
             .replace(/[^a-zA-Z0-9]+(.)/g, (m: any, chr: string) =>
@@ -109,7 +109,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
                   <Image
                     style={{
                       ...styles.carouselImage,
-                      width: 0.92 * windowWidth,
+                      width: 0.88 * windowWidth,
                     }}
                     //   resizeMode="contain"
                     source={{ uri: item.image }}
