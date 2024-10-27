@@ -19,6 +19,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
   const [caption, setCaption] = useState<any>("");
   const [author, setAuthor] = useState<any>("");
   const { index, onScroll } = useIndex();
+  const windowWidth = Dimensions.get("window").width;
 
   useEffect(() => {
     (async function () {
@@ -40,6 +41,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
       image: `https://picsum.photos/1440/2842?random=${random}`,
     };
   });
+
   const dotList = randomList.map((_, i) => {
     return (
       <Octicons
@@ -47,10 +49,28 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
         size={24}
         color={i === index ? "#f00" : "#0ff"}
         key={i}
-        style={{marginHorizontal:"1.5%"}}
+        style={{ marginHorizontal: "1.5%" }}
       />
     );
   });
+
+  const flatListOptimizationProps = {
+    initialNumToRender: 0,
+    maxToRenderPerBatch: 1,
+    removeClippedSubviews: true,
+    scrollEventThrottle: 16,
+    windowSize: 2,
+    keyExtractor: useCallback((e: any) => e.id, []),
+    getItemLayout: useCallback(
+      (_: any, index: any) => ({
+        index,
+        length: 0.92 * windowWidth,
+        offset: 0.92 * index * windowWidth,
+      }),
+      []
+    ),
+  };
+
   return (
     <View style={styles.root}>
       <View style={styles.user}>
@@ -83,20 +103,24 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
         <View>
           <FlatList
             data={slideList}
-            renderItem={({ item }) => {
+            renderItem={useCallback(({ item }: any) => {
               return (
                 <View style={styles.carouselView}>
                   <Image
-                    style={styles.carouselImage}
+                    style={{
+                      ...styles.carouselImage,
+                      width: 0.92 * windowWidth,
+                    }}
                     //   resizeMode="contain"
                     source={{ uri: item.image }}
                   />
                 </View>
               );
-            }}
+            }, [])}
             horizontal
             pagingEnabled
             onScroll={onScroll}
+            {...flatListOptimizationProps}
             // showsHorizontalScrollIndicator={false}
           />
           <View
@@ -105,7 +129,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
               bottom: "4%",
               // left: "40%",
               flexDirection: "row",
-              alignSelf:"center"
+              alignSelf: "center",
             }}
           >
             {dotList}
@@ -151,7 +175,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: "1%",
     height: 200,
-    width: 0.92 * Dimensions.get("screen").width,
   },
   title: { fontSize: 24 },
   subTitle: { fontSize: 18 },
