@@ -5,6 +5,7 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  StyleSheet,
   Text,
   View,
 } from "react-native";
@@ -29,35 +30,20 @@ export default function Index() {
     console.log("User Posts", userPosts);
   }, [userPosts]);
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        // alignItems: "center",
-        padding: "5%",
-      }}
-    >
+    <View style={styles.root}>
       {/* profile pic, username */}
-      <View
-        style={{
-          flex: 0.25,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.user}>
         <Image
           source={require("../../assets/images/react-logo.png")}
-          style={{ flex: 1, height: 50, width: 50, borderRadius: 25 }}
+          style={styles.pic}
           resizeMode="contain"
         />
-        <Text style={{ flex: 3, fontWeight: "bold", fontSize: 15 }}>
-          {userName}
-        </Text>
+        <Text style={styles.name}>{userName}</Text>
       </View>
       {/* bio */}
       <Text>{bio}</Text>
       {/* #followers #posts */}
-      <Text style={{ fontWeight: "bold", textAlign: "center" }}>
+      <Text style={styles.details}>
         {`\n${numFollowers}\t`}Followers {"\t\t\t\t"}
         {`${userPosts?.length}\t`}Posts{"\n"}
       </Text>
@@ -82,3 +68,20 @@ export default function Index() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    justifyContent: "center",
+    // alignItems: "center",
+    padding: "5%",
+  },
+  user: {
+    flex: 0.25,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  pic: { flex: 1, height: 50, width: 50, borderRadius: 25 },
+  name: { flex: 3, fontWeight: "bold", fontSize: 15 },
+  details: { fontWeight: "bold", textAlign: "center" },
+});

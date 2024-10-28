@@ -1,6 +1,6 @@
 import Post from "@/components/Post";
 import { useCallback } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   const numPosts = 500;
@@ -23,14 +23,7 @@ export default function Index() {
     keyExtractor: useCallback((e: any) => e.id, []),
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "2%",
-      }}
-    >
+    <View style={styles.root}>
       <FlatList
         data={postList}
         renderItem={useCallback(({ item }: any) => {
@@ -43,3 +36,11 @@ export default function Index() {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "2%",
+  },
+});

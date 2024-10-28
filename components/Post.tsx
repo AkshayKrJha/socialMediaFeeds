@@ -49,7 +49,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
         size={24}
         color={i === index ? "#f00" : "#0ff"}
         key={i}
-        style={{ marginHorizontal: "1.5%" }}
+        style={styles.dotList}
       />
     );
   });
@@ -84,7 +84,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
               0
             )}`,
           }}
-          style={{ height: 34, width: 34, borderRadius: 17 }}
+          style={styles.profile}
           // resizeMode="contain"
         />
         {/* <Text>React Native</Text> */}
@@ -123,17 +123,7 @@ export default function Post({ randomList = [1, 2, 3, 4, 5] }) {
             {...flatListOptimizationProps}
             // showsHorizontalScrollIndicator={false}
           />
-          <View
-            style={{
-              position: "absolute",
-              bottom: "4%",
-              // left: "40%",
-              flexDirection: "row",
-              alignSelf: "center",
-            }}
-          >
-            {dotList}
-          </View>
+          <View style={styles.carousel}>{dotList}</View>
         </View>
         {/* Likes count and description */}
         <Pressable
@@ -180,4 +170,13 @@ const styles = StyleSheet.create({
   subTitle: { fontSize: 18 },
   description: { padding: "2%", fontWeight: "bold" },
   time: { fontWeight: "300" },
+  dotList: { marginHorizontal: "1.5%" },
+  profile: { height: 34, width: 34, borderRadius: 17 },
+  carousel: {
+    position: "absolute",
+    bottom: "4%",
+    // left: "40%",
+    flexDirection: "row",
+    alignSelf: "center",
+  },
 });

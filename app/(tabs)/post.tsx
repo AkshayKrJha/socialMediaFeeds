@@ -14,9 +14,9 @@ export default function Post() {
     // validate entries
     // add post to user post list
     store.dispatch(addPost({ title, description, image }));
-    setTitle("")
-    setDescription("")
-    setImage(null)
+    setTitle("");
+    setDescription("");
+    setImage(null);
   }
   function titleValidity(title: any) {
     return /^[a-zA-Z0-9_]+$/.test(title);
